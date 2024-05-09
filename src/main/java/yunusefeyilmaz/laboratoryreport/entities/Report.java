@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -51,7 +52,8 @@ public class Report {
     @Column(name = "report_date")
     private Date reportDate;
 	
-	@Column(name = "image_path")
-    private String imagePath;
+	@Lob
+	@Column(name = "image")
+    private byte[] image;
 	
 }
