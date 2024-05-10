@@ -12,7 +12,7 @@ import yunusefeyilmaz.laboratoryreport.entities.Patient;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateReportRequest {
-	private int id;
+	private Long id;
 	private Patient patient;
 	private LabAssistant labAssistant;
     private String fileNumber;

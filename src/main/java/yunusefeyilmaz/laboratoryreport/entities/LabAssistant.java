@@ -25,7 +25,7 @@ public class LabAssistant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Long id;
 	
 	@Column(name="name")
 	private String name;
@@ -35,6 +35,9 @@ public class LabAssistant {
 	
 	@Column(name="hospital_id", unique = true)
 	private String hospitalID;
+	
+	@Column(name="password")
+	private String password;
 	
 	@OneToMany(mappedBy = "labAssistant")
 	private List<Report> reports;
