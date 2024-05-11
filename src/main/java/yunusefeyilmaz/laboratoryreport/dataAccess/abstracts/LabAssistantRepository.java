@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import yunusefeyilmaz.laboratoryreport.entities.LabAssistant;
 
 @Repository
-public interface LabAssistantRepository extends JpaRepository<LabAssistant, Integer> {
+public interface LabAssistantRepository extends JpaRepository<LabAssistant, Long> {
 
 }
