@@ -10,5 +10,5 @@ public interface LabAssistantService {
 	List<GetAllLabAssistantsResponse> getAll();
 	void add(CreateLabAssistantRequest createLabAssistantRequest);
 	void update(UpdateLabAssistantRequest updateLabAssistantRequest);
-	void delete(int id);
+	void delete(Long id);
 }
