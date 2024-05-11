@@ -4,11 +4,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
 
 @SpringBootApplication
+@RestControllerAdvice
 public class LaboratoryreportApplication {
 
 	public static void main(String[] args) {
