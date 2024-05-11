@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class ModelMapperManager implements ModelMapperService {
+	
 	private ModelMapper modelMapper;
 	
 	@Override
