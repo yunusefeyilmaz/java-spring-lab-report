@@ -10,10 +10,9 @@ import yunusefeyilmaz.laboratoryreport.entities.Report;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetPatientResponse {
+public class GetPatientForReports {
 	private Long id;
 	private String name;
 	private String surname;
 	private String patientID;
-	private List<Report> reports;
 }

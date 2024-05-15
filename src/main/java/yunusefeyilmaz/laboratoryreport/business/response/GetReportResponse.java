@@ -13,8 +13,8 @@ import yunusefeyilmaz.laboratoryreport.entities.Patient;
 @NoArgsConstructor
 public class GetReportResponse {
 	private Long id;
-	private Patient patient;
-	private LabAssistant labAssistant;
+	private GetPatientForReports patient;
+	private GetLabAssistantForReports labAssistant;
     private String fileNumber;
     private String diagnosisTitle;
     private String diagnosisDetails;
