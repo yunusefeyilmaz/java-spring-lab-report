@@ -19,5 +19,5 @@ public class UpdateReportRequest {
     private String diagnosisTitle;
     private String diagnosisDetails;
     private Date reportDate;
-    private String imagePath;
+    private byte[] image;
 }
