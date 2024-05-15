@@ -2,7 +2,7 @@ package yunusefeyilmaz.laboratoryreport.entities;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,14 +34,14 @@ public class Report {
 	@Column(name="id")
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
-	@JsonIgnore
+	@JsonBackReference
     private Patient patient;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lab_assistant_id", nullable = false)
-	@JsonIgnore
+	@JsonBackReference
     private LabAssistant labAssistant;
 	
 	@Column(name = "file_number")
