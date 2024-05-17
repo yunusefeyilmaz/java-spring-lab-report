@@ -2,6 +2,7 @@ package yunusefeyilmaz.laboratoryreport.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -44,7 +45,7 @@ public class LabAssistant {
 	private String password;
 	
 	@OneToMany(mappedBy = "labAssistant", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Report> reports;
 	
 }

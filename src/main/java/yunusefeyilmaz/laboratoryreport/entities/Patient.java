@@ -2,6 +2,7 @@ package yunusefeyilmaz.laboratoryreport.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -41,6 +42,6 @@ public class Patient {
 	private String patientID;
 	
 	@OneToMany(mappedBy = "patient", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Report> reports;
 }
