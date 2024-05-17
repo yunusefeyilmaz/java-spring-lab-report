@@ -13,6 +13,7 @@ import yunusefeyilmaz.laboratoryreport.business.requests.CreatePatientRequest;
 import yunusefeyilmaz.laboratoryreport.business.requests.UpdatePatientRequest;
 import yunusefeyilmaz.laboratoryreport.business.response.GetAllPatientsResponse;
 import yunusefeyilmaz.laboratoryreport.business.response.GetPatientResponse;
+import yunusefeyilmaz.laboratoryreport.business.rules.PatientBusinessRules;
 import yunusefeyilmaz.laboratoryreport.core.utilities.mappers.ModelMapperService;
 import yunusefeyilmaz.laboratoryreport.dataAccess.abstracts.PatientRepository;
 import yunusefeyilmaz.laboratoryreport.entities.Patient;
@@ -25,6 +26,8 @@ public class PatientManager implements PatientService {
 	private PatientRepository patientRepository;
 	@Autowired
 	private ModelMapperService modelMapperService;
+	
+	private PatientBusinessRules patientBusinessRules;
 
 	@Override
 	public List<GetAllPatientsResponse> getAll() {
@@ -35,9 +38,9 @@ public class PatientManager implements PatientService {
 	}
 
 	@Override
-	public void add(CreatePatientRequest createPatientRequest) {
+	public Patient add(CreatePatientRequest createPatientRequest) {
 		Patient patient = this.modelMapperService.forRequest().map(createPatientRequest, Patient.class);
-		this.patientRepository.save(patient);
+		return this.patientRepository.save(patient);
 	}
 
 	@Override
@@ -56,6 +59,24 @@ public class PatientManager implements PatientService {
 		Optional<Patient> patient = this.patientRepository.findById(id);
 		GetPatientResponse patientResponse = patient.map(p -> this.modelMapperService.forResponse().map(p, GetPatientResponse.class)).orElse(null);
 		return patientResponse;
+	}
+
+	@Override
+	public GetPatientResponse findOneByPatientId(String patientID) {
+		Optional<Patient> patient = this.patientRepository.findByPatientID(patientID);
+		GetPatientResponse patientResponse = patient.map(p -> this.modelMapperService.forResponse().map(p, GetPatientResponse.class)).orElse(null);
+		return patientResponse;
+	}
+
+	@Override
+	public Patient findOrCreatePatient(Patient patient) {
+		GetPatientResponse patientResponse = this.findOneByPatientId(patient.getPatientID());
+		if(this.patientBusinessRules.checkIfPatientNull(patientResponse)) {
+			CreatePatientRequest patientRequest = this.modelMapperService.forRequest().map(patient, CreatePatientRequest.class);
+			return this.add(patientRequest);
+		}
+		patient.setId(patientResponse.getId());
+		return patient;
 	}
 
 }
