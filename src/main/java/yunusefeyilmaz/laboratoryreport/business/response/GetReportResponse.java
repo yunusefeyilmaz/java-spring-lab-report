@@ -5,9 +5,6 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import yunusefeyilmaz.laboratoryreport.entities.LabAssistant;
-import yunusefeyilmaz.laboratoryreport.entities.Patient;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,11 +1,9 @@
 package yunusefeyilmaz.laboratoryreport.business.response;
 
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import yunusefeyilmaz.laboratoryreport.entities.Report;
 
 @Data
 @AllArgsConstructor

@@ -36,7 +36,11 @@ public class LabAssistantManager implements LabAssistantService {
 	
 	@Override
 	public void add(CreateLabAssistantRequest createLabAssistantRequest) {
-		LabAssistant labAssistant = this.modelMapperService.forRequest().map(createLabAssistantRequest, LabAssistant.class);
+		LabAssistant labAssistant = new LabAssistant();
+		labAssistant.setHospitalId(createLabAssistantRequest.getHospitalId());
+		labAssistant.setName(createLabAssistantRequest.getName());
+		labAssistant.setPassword(createLabAssistantRequest.getPassword());
+		labAssistant.setSurname(createLabAssistantRequest.getSurname());
 		this.labAssistantRepository.save(labAssistant);
 	}
 	
@@ -50,5 +54,11 @@ public class LabAssistantManager implements LabAssistantService {
 	public void delete(Long id) {
 		this.labAssistantRepository.deleteById(id);;
 	}
+
+	@Override
+	public LabAssistant getOneLabAsistantByLabAssistant(String hospitalId) {
+		return labAssistantRepository.findByHospitalId(hospitalId);
+	}
+	
 
 }

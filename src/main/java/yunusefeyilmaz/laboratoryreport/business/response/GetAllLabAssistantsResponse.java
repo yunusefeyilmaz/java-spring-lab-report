@@ -14,6 +14,6 @@ public class GetAllLabAssistantsResponse {
 	private Long id;
 	private String name;
 	private String surname;
-	private String hospitalID;
+	private String hospitalId;
 	private List<Report> reports;
 }

@@ -7,5 +7,5 @@ import yunusefeyilmaz.laboratoryreport.entities.LabAssistant;
 
 @Repository
 public interface LabAssistantRepository extends JpaRepository<LabAssistant, Long> {
-
+	LabAssistant findByHospitalId(String hospitalId);
 }

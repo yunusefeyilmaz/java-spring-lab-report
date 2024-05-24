@@ -3,7 +3,6 @@ package yunusefeyilmaz.laboratoryreport.entities;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +39,8 @@ public class LabAssistant {
 	private String surname;
 	
 	@Column(name="hospital_id", unique = true)
-	private String hospitalID;
+	@NotBlank
+	private String hospitalId;
 	
 	@Column(name="password")
 	private String password;
