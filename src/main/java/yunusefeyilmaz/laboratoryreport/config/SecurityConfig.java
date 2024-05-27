@@ -20,7 +20,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.AllArgsConstructor;
-import yunusefeyilmaz.laboratoryreport.business.concretes.LabAssistantDetailsService;
 import yunusefeyilmaz.laboratoryreport.security.JwtAuthenticationEntryPoint;
 import yunusefeyilmaz.laboratoryreport.security.JwtAuthenticationFilter;
 
