@@ -45,7 +45,7 @@ public class LabAssistant {
 	@Column(name="password")
 	private String password;
 	
-	@OneToMany(mappedBy = "labAssistant", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "labAssistant", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JsonIgnore
 	private List<Report> reports;
 	

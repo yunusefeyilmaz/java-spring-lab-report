@@ -19,6 +19,7 @@ import yunusefeyilmaz.laboratoryreport.business.abstracts.LabAssistantService;
 import yunusefeyilmaz.laboratoryreport.business.requests.CreateLabAssistantRequest;
 import yunusefeyilmaz.laboratoryreport.business.requests.UpdateLabAssistantRequest;
 import yunusefeyilmaz.laboratoryreport.business.response.GetAllLabAssistantsResponse;
+import yunusefeyilmaz.laboratoryreport.business.response.GetLabAssistantResponse;
 
 @RestController
 @RequestMapping("/api/labassistants")
@@ -47,5 +48,10 @@ public class LabAssistantController {
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		this.labAssistantService.delete(id);
+	}
+	
+	@GetMapping("/{id}")
+	public GetLabAssistantResponse getOne(@PathVariable Long id){
+		return this.labAssistantService.getOne(id);
 	}
 }

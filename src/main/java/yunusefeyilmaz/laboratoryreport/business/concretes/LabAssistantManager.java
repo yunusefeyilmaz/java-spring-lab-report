@@ -1,6 +1,7 @@
 package yunusefeyilmaz.laboratoryreport.business.concretes;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import yunusefeyilmaz.laboratoryreport.business.abstracts.LabAssistantService;
 import yunusefeyilmaz.laboratoryreport.business.requests.CreateLabAssistantRequest;
 import yunusefeyilmaz.laboratoryreport.business.requests.UpdateLabAssistantRequest;
 import yunusefeyilmaz.laboratoryreport.business.response.GetAllLabAssistantsResponse;
+import yunusefeyilmaz.laboratoryreport.business.response.GetLabAssistantResponse;
 import yunusefeyilmaz.laboratoryreport.core.utilities.mappers.ModelMapperService;
 import yunusefeyilmaz.laboratoryreport.dataAccess.abstracts.LabAssistantRepository;
 import yunusefeyilmaz.laboratoryreport.entities.LabAssistant;
@@ -59,6 +61,18 @@ public class LabAssistantManager implements LabAssistantService {
 	public LabAssistant getOneLabAsistantByLabAssistant(String hospitalId) {
 		return labAssistantRepository.findByHospitalId(hospitalId);
 	}
+	@Override
+	public LabAssistant findById(Long id) {
+		Optional<LabAssistant> labAssistant = labAssistantRepository.findById(id);
+		LabAssistant labAssistantResponse = labAssistant.map(p -> this.modelMapperService.forResponse().map(p, LabAssistant.class)).orElse(null);
+		return labAssistantResponse;
+	}
 	
+	@Override
+	public GetLabAssistantResponse getOne(Long id) {
+		LabAssistant labAssistant = this.findById(id);
+		GetLabAssistantResponse labAssistantResponse = this.modelMapperService.forResponse().map(labAssistant, GetLabAssistantResponse.class);
+		return labAssistantResponse;
+	}
 
 }
