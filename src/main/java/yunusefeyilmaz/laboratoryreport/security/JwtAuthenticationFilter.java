@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			if(StringUtils.hasText(jwtToken) && jwtTokenProvider.validateToken(jwtToken)) {
 				Long id = jwtTokenProvider.getLabAssistantIdFromJwt(jwtToken);
 				UserDetails labAssistant = labAssistantDetailsService.loadUserById(id);
-				if(labAssistant!=null) {
+				if(labAssistant!=null && SecurityContextHolder.getContext().getAuthentication() == null) {
 					UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(labAssistant,null,labAssistant.getAuthorities());
 					auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(auth);

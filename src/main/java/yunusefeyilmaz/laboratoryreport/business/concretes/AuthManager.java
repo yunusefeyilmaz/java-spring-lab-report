@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import yunusefeyilmaz.laboratoryreport.business.abstracts.AuthService;
@@ -31,14 +32,15 @@ public class AuthManager implements AuthService {
 	
 	private PasswordEncoder passwordEncoder;
 	
+	@Transactional
 	@Override
 	public AuthResponse login(LoginLabAssistantRequest labAssistantRequest) {
+		AuthResponse authResponse = new AuthResponse();
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(labAssistantRequest.getHospitalId(), labAssistantRequest.getPassword());
 		Authentication auth = authenticationManager.authenticate(authToken);
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		String jwtToken = jwtTokenProvider.generateJwtToken(auth);
 		LabAssistant labAssistant = labAssistantService.getOneLabAsistantByLabAssistant(labAssistantRequest.getHospitalId());
-		AuthResponse authResponse = new AuthResponse();
 		authResponse.setMessage("Bearer " + jwtToken);
 		authResponse.setId(labAssistant.getId());
 		return authResponse;

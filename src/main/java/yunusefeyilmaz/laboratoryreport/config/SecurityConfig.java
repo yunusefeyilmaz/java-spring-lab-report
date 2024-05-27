@@ -29,7 +29,6 @@ import yunusefeyilmaz.laboratoryreport.security.JwtAuthenticationFilter;
 @Configuration
 public class SecurityConfig{
 	
-	private LabAssistantDetailsService labAssistantDetailsService;
 	private JwtAuthenticationEntryPoint handler;
 	
 	@Bean
@@ -53,7 +52,7 @@ public class SecurityConfig{
             .csrf().disable()
             .exceptionHandling(exceptionHandling -> 
                 exceptionHandling.authenticationEntryPoint(handler))
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
             .authorizeHttpRequests(authorizeRequests -> 
                 authorizeRequests
 	                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
