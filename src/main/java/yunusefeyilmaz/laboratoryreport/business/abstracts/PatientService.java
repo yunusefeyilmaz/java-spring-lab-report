@@ -16,4 +16,5 @@ public interface PatientService {
 	GetPatientResponse getPatient(Long id);
 	GetPatientResponse findOneByPatientId(String patientID);
 	Patient findOrCreatePatient(Patient patient);
+	Patient findById(Long id);
 }

@@ -40,7 +40,7 @@ public class Patient {
 	@Column(name="patient_id", unique = true)
 	private String patientID;
 	
-	@OneToMany(mappedBy = "patient", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JsonIgnore
 	private List<Report> reports;
 }

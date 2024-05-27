@@ -67,6 +67,13 @@ public class PatientManager implements PatientService {
 		GetPatientResponse patientResponse = patient.map(p -> this.modelMapperService.forResponse().map(p, GetPatientResponse.class)).orElse(null);
 		return patientResponse;
 	}
+	@Override
+	public Patient findById(Long id) {
+		Optional<Patient> patient = this.patientRepository.findById(id);
+		Patient patientResponse = patient.map(p -> this.modelMapperService.forResponse().map(p, Patient.class)).orElse(null);
+		patientResponse.setId(id);
+		return patientResponse;
+	}
 
 	@Override
 	public Patient findOrCreatePatient(Patient patient) {
