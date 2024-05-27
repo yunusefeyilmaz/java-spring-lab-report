@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import yunusefeyilmaz.laboratoryreport.business.response.GetReportResponse;
 import yunusefeyilmaz.laboratoryreport.business.rules.ReportBusinessRules;
 import yunusefeyilmaz.laboratoryreport.core.utilities.mappers.ModelMapperService;
 import yunusefeyilmaz.laboratoryreport.dataAccess.abstracts.ReportRepository;
+import yunusefeyilmaz.laboratoryreport.entities.LabAssistant;
 import yunusefeyilmaz.laboratoryreport.entities.Patient;
 import yunusefeyilmaz.laboratoryreport.entities.Report;
 
@@ -31,6 +33,7 @@ public class ReportManager implements ReportService {
 	
 	private ReportBusinessRules reportBusinessRules;
 
+	@Transactional
 	@Override
 	public List<GetAllReportsResponse> getAll() {
 		List<Report> reports = this.reportRepository.findAll();
@@ -48,14 +51,19 @@ public class ReportManager implements ReportService {
 			Patient patient = this.reportBusinessRules.checkPatientExists(report.getPatient());
 			report.setPatient(patient);
 		}
-		
+		String labAssistantHospitalID = SecurityContextHolder.getContext().getAuthentication().getName();
+		LabAssistant labAssistant = this.reportBusinessRules.checkLabAssistant(labAssistantHospitalID);
+		report.setLabAssistant(labAssistant);
 		this.reportRepository.save(report);
 	}
 
+	@Transactional
 	@Override
 	public void update(UpdateReportRequest updateReportRequest) {
 		Report report = this.modelMapperService.forRequest().map(updateReportRequest, Report.class);
+		Patient patient = report.getPatient();
 		this.reportRepository.save(report);
+		this.reportBusinessRules.updatePatient(patient);
 	}
 
 	@Override

@@ -10,5 +10,4 @@ import yunusefeyilmaz.laboratoryreport.entities.Report;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
 	List<Report> findByPatient_Id(Long patientId);
-    List<Report> findAllByOrderByReportDateDesc();
 }

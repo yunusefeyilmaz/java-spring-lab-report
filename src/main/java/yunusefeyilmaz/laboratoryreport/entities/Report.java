@@ -2,8 +2,10 @@ package yunusefeyilmaz.laboratoryreport.entities;
 
 import java.util.Date;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,7 +41,7 @@ public class Report {
 	@JsonIgnore
     private Patient patient;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "lab_assistant_id", nullable = false)
 	@JsonIgnore
     private LabAssistant labAssistant;
