@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>yunusefeyilmaz</groupId>
 	<artifactId>laboratoryreport</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>laboratoryreport</name>
 	<description>Laboratory reporting system</description>
 	<properties>
@@ -62,11 +62,6 @@
 			<version>3.1.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>io.github.cdimascio</groupId>
-		    <artifactId>dotenv-java</artifactId>
-		    <version>3.0.0</version>
-		</dependency>
-		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -103,5 +98,12 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<profiles>
+        <profile>
+            <id>laboratoryreport</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 </project>
