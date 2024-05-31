@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import yunusefeyilmaz.laboratoryreport.business.abstracts.PatientService;
 import yunusefeyilmaz.laboratoryreport.business.requests.CreatePatientRequest;
@@ -16,6 +18,7 @@ import yunusefeyilmaz.laboratoryreport.business.response.GetPatientResponse;
 import yunusefeyilmaz.laboratoryreport.business.rules.PatientBusinessRules;
 import yunusefeyilmaz.laboratoryreport.core.utilities.mappers.ModelMapperService;
 import yunusefeyilmaz.laboratoryreport.dataAccess.abstracts.PatientRepository;
+import yunusefeyilmaz.laboratoryreport.entities.LabAssistant;
 import yunusefeyilmaz.laboratoryreport.entities.Patient;
 
 @Service
@@ -29,9 +32,10 @@ public class PatientManager implements PatientService {
 	
 	private PatientBusinessRules patientBusinessRules;
 
+	@Transactional
 	@Override
 	public List<GetAllPatientsResponse> getAll() {
-		List<Patient> patients = this.patientRepository.findAll();
+		List<Patient> patients = this.patientRepository.findByReportsLabAssistantId(this.patientBusinessRules.checkLabAssistant().getId());
 		List<GetAllPatientsResponse> patientsResponse = patients.stream().
 				map(patient -> this.modelMapperService.forResponse().map(patient, GetAllPatientsResponse.class)).collect(Collectors.toList());
 		return patientsResponse;
@@ -54,19 +58,22 @@ public class PatientManager implements PatientService {
 		this.patientRepository.deleteById(id);
 	}
 
+	@Transactional
 	@Override
 	public GetPatientResponse getPatient(Long id) {
-		Optional<Patient> patient = this.patientRepository.findById(id);
+		Optional<Patient> patient = this.patientRepository.findByReportsLabAssistantIdAndId(this.patientBusinessRules.checkLabAssistant().getId(),id);
 		GetPatientResponse patientResponse = patient.map(p -> this.modelMapperService.forResponse().map(p, GetPatientResponse.class)).orElse(null);
 		return patientResponse;
 	}
 
+	@Transactional
 	@Override
 	public GetPatientResponse findOneByPatientId(String patientID) {
-		Optional<Patient> patient = this.patientRepository.findByPatientID(patientID);
+		Optional<Patient> patient = this.patientRepository.findByPatientId(patientID);
 		GetPatientResponse patientResponse = patient.map(p -> this.modelMapperService.forResponse().map(p, GetPatientResponse.class)).orElse(null);
 		return patientResponse;
 	}
+	@Transactional
 	@Override
 	public Patient findById(Long id) {
 		Optional<Patient> patient = this.patientRepository.findById(id);
@@ -77,7 +84,7 @@ public class PatientManager implements PatientService {
 
 	@Override
 	public Patient findOrCreatePatient(Patient patient) {
-		GetPatientResponse patientResponse = this.findOneByPatientId(patient.getPatientID());
+		GetPatientResponse patientResponse = this.findOneByPatientId(patient.getPatientId());
 		if(this.patientBusinessRules.checkIfPatientNull(patientResponse)) {
 			CreatePatientRequest patientRequest = this.modelMapperService.forRequest().map(patient, CreatePatientRequest.class);
 			return this.add(patientRequest);

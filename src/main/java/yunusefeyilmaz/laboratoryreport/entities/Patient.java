@@ -38,7 +38,7 @@ public class Patient {
 	private String surname;
 	
 	@Column(name="patient_id", unique = true)
-	private String patientID;
+	private String patientId;
 	
 	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JsonIgnore
