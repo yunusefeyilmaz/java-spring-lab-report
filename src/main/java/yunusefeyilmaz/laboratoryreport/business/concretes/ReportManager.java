@@ -36,7 +36,7 @@ public class ReportManager implements ReportService {
 	@Transactional
 	@Override
 	public List<GetAllReportsResponse> getAll() {
-		List<Report> reports = this.reportRepository.findAll();
+		List<Report> reports = this.reportRepository.findByLabAssistantId(this.reportBusinessRules.checkLabAssistant().getId());
 		List<GetAllReportsResponse> reportsResponse = reports.stream()
 				.map(report -> this.modelMapperService.forResponse().map(report, GetAllReportsResponse.class))
 				.collect(Collectors.toList());
@@ -47,13 +47,9 @@ public class ReportManager implements ReportService {
 	@Override
 	public void add(CreateReportRequest createReportRequest) {
 		Report report = this.modelMapperService.forRequest().map(createReportRequest, Report.class);
-		if(report.getPatient()!=null) {
-			Patient patient = this.reportBusinessRules.checkPatientExists(report.getPatient());
-			report.setPatient(patient);
-		}
-		String labAssistantHospitalID = SecurityContextHolder.getContext().getAuthentication().getName();
-		LabAssistant labAssistant = this.reportBusinessRules.checkLabAssistant(labAssistantHospitalID);
-		report.setLabAssistant(labAssistant);
+		report.setPatient(this.reportBusinessRules.checkPatientExists(report.getPatient()));
+		report.setLabAssistant(this.reportBusinessRules.checkLabAssistant());
+		report.setImageEmpty(reportBusinessRules.checkImageNull(createReportRequest.getImage()));
 		this.reportRepository.save(report);
 	}
 
@@ -62,6 +58,7 @@ public class ReportManager implements ReportService {
 	public void update(UpdateReportRequest updateReportRequest) {
 		Report report = this.modelMapperService.forRequest().map(updateReportRequest, Report.class);
 		Patient patient = report.getPatient();
+		report.setImageEmpty(reportBusinessRules.checkImageNull(updateReportRequest.getImage()));
 		this.reportRepository.save(report);
 		this.reportBusinessRules.updatePatient(patient);
 	}
@@ -71,9 +68,10 @@ public class ReportManager implements ReportService {
 		this.reportRepository.deleteById(id);
 	}
 
+	@Transactional
 	@Override
 	public GetReportResponse getReport(Long id) {
-		Optional<Report> report = this.reportRepository.findById(id);
+		Optional<Report> report = this.reportRepository.findByLabAssistantIdAndId(this.reportBusinessRules.checkLabAssistant().getId(),id);
 		GetReportResponse reportResponse = report.map(r -> this.modelMapperService.forResponse().map(r, GetReportResponse.class)).orElse(null);
 		return reportResponse;
 	}

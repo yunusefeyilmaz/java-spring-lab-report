@@ -63,4 +63,7 @@ public class Report {
 	@Column(name = "image")
     private byte[] image;
 	
+	@Column(name = "isImageEmpty")
+    private boolean isImageEmpty;
+	
 }
