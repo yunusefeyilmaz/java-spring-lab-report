@@ -14,6 +14,6 @@ public class GetPatientResponse {
 	private Long id;
 	private String name;
 	private String surname;
-	private String patientID;
+	private String patientId;
 	private List<Report> reports;
 }

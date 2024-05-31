@@ -12,5 +12,5 @@ public class GetPatientForReports {
 	private Long id;
 	private String name;
 	private String surname;
-	private String patientID;
+	private String patientId;
 }

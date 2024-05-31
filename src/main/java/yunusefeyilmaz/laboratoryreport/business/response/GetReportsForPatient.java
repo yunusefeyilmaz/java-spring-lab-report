@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllReportsResponse {
+public class GetReportsForPatient {
 	private Long id;
     private String fileNumber;	
-    private GetPatientForReports patient;
     private String diagnosisTitle;
     private String diagnosisDetails;
     private Date reportDate;
