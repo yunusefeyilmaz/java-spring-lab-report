@@ -13,7 +13,12 @@ This project is a Java Spring-based Lab Report System designed to manage patient
     git clone https://github.com/yunusefeyilmaz/java-spring-lab-report.git
     cd java-spring-lab-report
     ```
-2. Build docker:
+2. Initialize the submodules:
+   
+    ```bash
+    git submodule update --init --recursive
+    ```
+3. Build docker:
 
     ```bash
     docker-compose up --build
